@@ -13,38 +13,36 @@ import androidx.core.view.WindowCompat
 // ============================================================
 private val DarkColorScheme = darkColorScheme(
     // ===== PRIMARY (MERAH) =====
-    primary = Color(0xFFEF5350),              // Merah terang (tombol, icon aktif)
-    onPrimary = Color(0xFFFFFFFF),            // ✅ PUTIH (teks di atas primary)
-    primaryContainer = Color(0xFF7F0000),     // Merah tua (header card, container)
-    onPrimaryContainer = Color(0xFFFFFFFF),   // ✅ PUTIH (teks di atas container)
+    primary = Color(0xFFEF5350),
+    onPrimary = Color(0xFFFFFFFF),
+    primaryContainer = Color(0xFF7F0000),
+    onPrimaryContainer = Color(0xFFFFFFFF),
 
     // ===== SECONDARY (MERAH MUDA) =====
-    secondary = Color(0xFFFF6B6B),            // Merah muda
-    onSecondary = Color(0xFFFFFFFF),          // ✅ PUTIH
-    secondaryContainer = Color(0xFF4A0A1A),   // Merah sangat tua
-    onSecondaryContainer = Color(0xFFFFFFFF), // ✅ PUTIH
+    secondary = Color(0xFFFF6B6B),
+    onSecondary = Color(0xFFFFFFFF),
+    secondaryContainer = Color(0xFF4A0A1A),
+    onSecondaryContainer = Color(0xFFFFFFFF),
 
     // ===== TERTIARY =====
-    tertiary = Color(0xFFD32F2F),             // Merah tua
-    onTertiary = Color(0xFFFFFFFF),           // ✅ PUTIH
-    tertiaryContainer = Color(0xFF3E0A0A),    // Merah kehitaman
-    onTertiaryContainer = Color(0xFFFFFFFF),  // ✅ PUTIH
-
+    tertiary = Color(0xFFD32F2F),
+    onTertiary = Color(0xFFFFFFFF),
+    tertiaryContainer = Color(0xFF3E0A0A),
+    onTertiaryContainer = Color(0xFFFFFFFF),
     // ===== BACKGROUND & SURFACE =====
-    background = Color(0xFF0D0D0D),           // Hitam pekat (background)
-    onBackground = Color(0xFFFFFFFF),         // ✅ PUTIH (teks di atas background)
+    background = Color(0xFF0D0D0D),
+    onBackground = Color(0xFFFFFFFF),
 
-    surface = Color(0xFF1A1A1A),              // Hitam abu-abu (card)
-    onSurface = Color(0xFFFFFFFF),            // ✅ PUTIH (teks di atas surface)
+    surface = Color(0xFF1A1A1A),
+    onSurface = Color(0xFFFFFFFF),
 
-    surfaceVariant = Color(0xFF2D2D2D),       // Abu-abu gelap
-    onSurfaceVariant = Color(0xFFB0B0B0),     // Abu-abu terang (teks sekunder)
-
+    surfaceVariant = Color(0xFF2D2D2D),
+    onSurfaceVariant = Color(0xFFB0B0B0),
     // ===== ERROR =====
-    error = Color(0xFFEF5350),                // Merah
-    onError = Color(0xFFFFFFFF),              // ✅ PUTIH
+    error = Color(0xFFEF5350),
+    onError = Color(0xFFFFFFFF),
     errorContainer = Color(0xFF4A0A1A),
-    onErrorContainer = Color(0xFFFFFFFF),     // ✅ PUTIH
+    onErrorContainer = Color(0xFFFFFFFF),
 
     // ===== INVERSE =====
     inverseSurface = Color(0xFFE8E8E8),
