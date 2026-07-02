@@ -1,7 +1,7 @@
 # Metal Cardbot Character
 
 <p align= "center">
-  <img src="app/src/main/ic_launcher-playstore.png" witdh= 50%" />
+  <img src="app/src/main/ic_launcher-playstore.png" witdh= 100%" />
   <b>Metal Cardbot Character Logo Apps</b>
 </p>
 
