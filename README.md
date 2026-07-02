@@ -2,6 +2,7 @@
 
 <p align= "center">
   <img src="app/src/main/ic_launcher-playstore.png" alt="Metal Cardbot Character Logo Apps" witdh= 100%" />
+ 
   <b>Metal Cardbot Character Logo Apps</b>
 </p>
 
