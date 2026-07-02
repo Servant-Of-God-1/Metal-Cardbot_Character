@@ -20,8 +20,8 @@ https://github.com/Servant-Of-God-1/Metal_Cardbot_restful_API_code
 app\src\main\java\com\example\testingmyapi\api
 ```
 ***in the code written as shown below***
-```
 kotlin
+```
 private const val BASE_URL = "your base url"
 ```
 # Features of the Metal Cardbot character app
