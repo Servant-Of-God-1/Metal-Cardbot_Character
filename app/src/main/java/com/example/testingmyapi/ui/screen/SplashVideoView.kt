@@ -27,9 +27,6 @@ import com.example.testingmyapi.R
 fun SplashVideoView(
     onVideoComplete: () -> Unit
 ) {
-    // ============================================================
-    // 1. DEKLARASI VARIABEL
-    // ============================================================
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     var error by remember { mutableStateOf<String?>(null) }
@@ -39,9 +36,6 @@ fun SplashVideoView(
     var currentPosition by remember { mutableStateOf(0) }
     var isCompleteCalled by remember { mutableStateOf(false) }
 
-    // ============================================================
-    // 2. ANIMASI FADE IN
-    // ============================================================
     val alpha by animateFloatAsState(
         targetValue = 1f,
         animationSpec = tween(
@@ -51,9 +45,6 @@ fun SplashVideoView(
         label = "fade_in"
     )
 
-    // ============================================================
-    // 3. CEK LIFECYCLE (Hanya pause/resume, TANPA panggil onComplete)
-    // ============================================================
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             when (event) {
@@ -82,9 +73,6 @@ fun SplashVideoView(
         }
     }
 
-    // ============================================================
-    // 4. LAYOUT UTAMA
-    // ============================================================
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -93,9 +81,6 @@ fun SplashVideoView(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        // ============================================================
-        // 4a. VIDEO DI TENGAH
-        // ============================================================
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -144,9 +129,6 @@ fun SplashVideoView(
             )
         }
 
-        // ============================================================
-        // 4b. KONTEN DI BAWAH
-        // ============================================================
         Row(
             modifier = Modifier
                 .fillMaxWidth()

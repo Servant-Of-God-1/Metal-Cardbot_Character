@@ -7,29 +7,22 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.runtime.SideEffect
 import androidx.core.view.WindowCompat
-
-// ============================================================
-// ============ DARK MODE (DOMINAN MERAH) ============
-// ============================================================
 private val DarkColorScheme = darkColorScheme(
-    // ===== PRIMARY (MERAH) =====
     primary = Color(0xFFEF5350),
     onPrimary = Color(0xFFFFFFFF),
     primaryContainer = Color(0xFF7F0000),
     onPrimaryContainer = Color(0xFFFFFFFF),
 
-    // ===== SECONDARY (MERAH MUDA) =====
     secondary = Color(0xFFFF6B6B),
     onSecondary = Color(0xFFFFFFFF),
     secondaryContainer = Color(0xFF4A0A1A),
     onSecondaryContainer = Color(0xFFFFFFFF),
 
-    // ===== TERTIARY =====
     tertiary = Color(0xFFD32F2F),
     onTertiary = Color(0xFFFFFFFF),
     tertiaryContainer = Color(0xFF3E0A0A),
     onTertiaryContainer = Color(0xFFFFFFFF),
-    // ===== BACKGROUND & SURFACE =====
+
     background = Color(0xFF0D0D0D),
     onBackground = Color(0xFFFFFFFF),
 
@@ -38,56 +31,45 @@ private val DarkColorScheme = darkColorScheme(
 
     surfaceVariant = Color(0xFF2D2D2D),
     onSurfaceVariant = Color(0xFFB0B0B0),
-    // ===== ERROR =====
+
     error = Color(0xFFEF5350),
     onError = Color(0xFFFFFFFF),
     errorContainer = Color(0xFF4A0A1A),
     onErrorContainer = Color(0xFFFFFFFF),
 
-    // ===== INVERSE =====
     inverseSurface = Color(0xFFE8E8E8),
     inverseOnSurface = Color(0xFF121212)
 )
-
-// ============================================================
-// ============ LIGHT MODE (DOMINAN BIRU) ============
-// ============================================================
 private val LightColorScheme = lightColorScheme(
-    // ===== PRIMARY (BIRU) =====
-    primary = Color(0xFF1565C0),              // Biru tua (tombol, icon aktif)
-    onPrimary = Color(0xFFFFFFFF),            // ✅ PUTIH (teks di atas primary)
-    primaryContainer = Color(0xFFBBDEFB),     // Biru sangat muda (header card, container)
-    onPrimaryContainer = Color(0xFF000000),   // ✅ HITAM (teks di atas container)
+    primary = Color(0xFF1565C0),
+    onPrimary = Color(0xFFFFFFFF),
+    primaryContainer = Color(0xFFBBDEFB),
+    onPrimaryContainer = Color(0xFF000000),
 
-    // ===== SECONDARY (BIRU MUDA) =====
-    secondary = Color(0xFF42A5F5),            // Biru terang
-    onSecondary = Color(0xFFFFFFFF),          // ✅ PUTIH
-    secondaryContainer = Color(0xFFE3F2FD),   // Biru sangat muda
-    onSecondaryContainer = Color(0xFF000000), // ✅ HITAM
+    secondary = Color(0xFF42A5F5),
+    onSecondary = Color(0xFFFFFFFF),
+    secondaryContainer = Color(0xFFE3F2FD),
+    onSecondaryContainer = Color(0xFF000000),
 
-    // ===== TERTIARY (BIRU LAUT) =====
-    tertiary = Color(0xFF0D47A1),             // Biru tua
-    onTertiary = Color(0xFFFFFFFF),           // ✅ PUTIH
+    tertiary = Color(0xFF0D47A1),
+    onTertiary = Color(0xFFFFFFFF),
     tertiaryContainer = Color(0xFFBBDEFB),
-    onTertiaryContainer = Color(0xFF000000),  // ✅ HITAM
+    onTertiaryContainer = Color(0xFF000000),
 
-    // ===== BACKGROUND & SURFACE =====
-    background = Color(0xFFF5F9FF),           // Biru abu-abu sangat muda (background)
-    onBackground = Color(0xFF000000),         // ✅ HITAM (teks di atas background)
+    background = Color(0xFFF5F9FF),
+    onBackground = Color(0xFF000000),
 
-    surface = Color(0xFFFFFFFF),              // Putih (card)
-    onSurface = Color(0xFF000000),            // ✅ HITAM (teks di atas surface)
+    surface = Color(0xFFFFFFFF),
+    onSurface = Color(0xFF000000),
 
     surfaceVariant = Color(0xFFE8E8E8),
-    onSurfaceVariant = Color(0xFF6B6B6B),     // Abu-abu (teks sekunder)
+    onSurfaceVariant = Color(0xFF6B6B6B),
 
-    // ===== ERROR =====
-    error = Color(0xFFBA1A1A),                // Merah
-    onError = Color(0xFFFFFFFF),              // ✅ PUTIH
+    error = Color(0xFFBA1A1A),
+    onError = Color(0xFFFFFFFF),
     errorContainer = Color(0xFFFFDAD6),
-    onErrorContainer = Color(0xFF000000),     // ✅ HITAM
+    onErrorContainer = Color(0xFF000000),
 
-    // ===== INVERSE =====
     inverseSurface = Color(0xFF1E1E1E),
     inverseOnSurface = Color(0xFFFFFFFF)
 )

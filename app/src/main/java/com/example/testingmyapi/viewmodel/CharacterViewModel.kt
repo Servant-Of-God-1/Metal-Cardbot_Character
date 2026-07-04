@@ -305,7 +305,6 @@ class CharacterViewModel(private val context: Context) : ViewModel() {
 
     fun logout() {
         viewModelScope.launch {
-            dataStorePref.clearAll()
             _uiState.value = UiState(
                 showLoginDialog = true,
                 loginMessage = "Anda telah berhasil logout. Sampai jumpa!",
@@ -318,8 +317,6 @@ class CharacterViewModel(private val context: Context) : ViewModel() {
             _uiState.update { it.copy(isLogoutSuccess = false) }
         }
     }
-
-    // ============ FILTER ============
 
     fun toggleFilterSheet() {
         _uiState.update { it.copy(showFilterSheet = !it.showFilterSheet) }
@@ -372,8 +369,6 @@ class CharacterViewModel(private val context: Context) : ViewModel() {
             )
         }
     }
-
-    // ============ CHARACTER DATA ============
 
     fun fetchAllCharacters() {
         viewModelScope.launch {
@@ -527,8 +522,6 @@ class CharacterViewModel(private val context: Context) : ViewModel() {
         _uiState.update { it.copy(selectedCharacter = null) }
     }
 
-    // ============ FAVORITE / WISHLIST ============
-
     fun getCharacterKey(name: String?): String {
         return name?.trim()?.lowercase() ?: ""
     }
@@ -540,17 +533,5 @@ class CharacterViewModel(private val context: Context) : ViewModel() {
         viewModelScope.launch {
             dataStorePref.toggleFavoriteName(key)
         }
-    }
-
-    fun isFavorite(characterName: String?): Boolean {
-        val key = getCharacterKey(characterName)
-        return _favoriteNames.value.contains(key)
-    }
-
-    fun getFavoriteCharacters(): List<Character> {
-        val all = _allCharacters.value
-        return all.filter { character ->
-            _favoriteNames.value.contains(getCharacterKey(character.name))
-        }.distinctBy { getCharacterKey(it.name) }
     }
 }

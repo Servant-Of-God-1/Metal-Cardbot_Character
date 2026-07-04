@@ -30,8 +30,6 @@ class DataStorePref(private val context: Context) {
         val PROFILE_IMAGE_KEY = stringPreferencesKey("profile_image") // ✅ Tambahkan ini
     }
 
-// ============ PROFILE IMAGE ============
-
     suspend fun saveProfileImage(imageBase64: String) {
         context.dataStore.edit { preferences ->
             preferences[PROFILE_IMAGE_KEY] = imageBase64
@@ -55,8 +53,6 @@ class DataStorePref(private val context: Context) {
         }
     }
 
-    // ============ KONVERSI BITMAP KE BASE64 ============
-
     fun bitmapToBase64(bitmap: Bitmap): String {
         val byteArrayOutputStream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream)
@@ -72,9 +68,6 @@ class DataStorePref(private val context: Context) {
             null
         }
     }
-
-    // ============ APP LANGUAGE ============
-
     val appLanguageFlow: Flow<String> = context.dataStore.data
         .map { preferences ->
             preferences[APP_LANGUAGE_KEY] ?: "en"
@@ -85,8 +78,6 @@ class DataStorePref(private val context: Context) {
             preferences[APP_LANGUAGE_KEY] = language
         }
     }
-
-    // ============ FAVORITE NAMES ============
 
     val favoriteNamesFlow: Flow<Set<String>> = context.dataStore.data
         .map { preferences ->
@@ -104,8 +95,6 @@ class DataStorePref(private val context: Context) {
             preferences[FAVORITE_NAMES_KEY] = newSet
         }
     }
-
-    // ============ AUTHENTICATION ============
 
     suspend fun registerUser(username: String, password: String) {
         context.dataStore.edit { preferences ->
@@ -148,12 +137,6 @@ class DataStorePref(private val context: Context) {
         .map { preferences ->
             preferences[IS_LOGGED_IN_KEY] ?: false
         }
-
-    suspend fun clearAll() {
-        context.dataStore.edit { preferences ->
-            preferences.clear()
-        }
-    }
 
     suspend fun printAllUsers() {
         val users = context.dataStore.data.map { preferences ->

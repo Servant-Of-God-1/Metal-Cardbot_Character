@@ -160,13 +160,11 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AppWithSplash() {
     var showSplash by rememberSaveable { mutableStateOf(true) }
-    var isLoggedIn by remember { mutableStateOf(false) }
     val viewModel: CharacterViewModel = viewModel(
         factory = CharacterViewModelFactory(LocalContext.current.applicationContext)
     )
     val uiState by viewModel.uiState.collectAsState()
     LaunchedEffect(uiState.isLoggedIn) {
-        isLoggedIn = uiState.isLoggedIn
     }
 
     if (showSplash) {
@@ -226,7 +224,6 @@ fun MainScreen(
 ) {
     var selectedTab by remember { mutableStateOf(BottomNavTab.CHARACTERS) }
 
-    // ✅ CEK APAKAH SHOW PROFILE = TRUE
     if (uiState.showProfile) {
         ProfileScreen(
             uiState = uiState,
@@ -236,7 +233,6 @@ fun MainScreen(
         return
     }
 
-    // ✅ Ambil gambar profil
     val profileImageBase64 by viewModel.profileImage.collectAsState()
     val profileBitmap = remember(profileImageBase64) {
         if (profileImageBase64.isNotEmpty()) {
@@ -343,7 +339,6 @@ fun MainScreen(
                 .padding(paddingValues)
                 .padding(16.dp)
         ) {
-            // ========== HEADER CARD ==========
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 colors = CardDefaults.cardColors(
@@ -362,7 +357,6 @@ fun MainScreen(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    // Kiri: Filter
                     if (uiState.isLoggedIn) {
                         IconButton(
                             onClick = { viewModel.toggleFilterSheet() },
@@ -378,7 +372,6 @@ fun MainScreen(
                         Spacer(modifier = Modifier.width(40.dp))
                     }
 
-                    // Kanan: Profile dengan Foto
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                         verticalAlignment = Alignment.CenterVertically
@@ -391,8 +384,6 @@ fun MainScreen(
                                 color = MaterialTheme.colorScheme.onPrimaryContainer
                             )
                         }
-
-                        // ✅ Tombol Profile dengan Foto
                         Box(
                             modifier = Modifier
                                 .size(40.dp)
@@ -410,14 +401,12 @@ fun MainScreen(
                                 )
                         ) {
                             if (profileBitmap != null && uiState.isLoggedIn) {
-                                // ✅ Tampilkan foto profil
                                 AsyncImage(
                                     model = profileBitmap,
                                     contentDescription = viewModel.getText("profile"),
                                     modifier = Modifier.fillMaxSize()
                                 )
                             } else {
-                                // ✅ Default avatar
                                 Icon(
                                     imageVector = if (uiState.isLoggedIn)
                                         Icons.Default.Person
@@ -439,16 +428,12 @@ fun MainScreen(
             }
 
             Spacer(modifier = Modifier.height(16.dp))
-
-            // ========== KONTEN ==========
             when (selectedTab) {
                 BottomNavTab.CHARACTERS -> CharacterListContent(uiState, viewModel)
                 BottomNavTab.WISHLIST -> WishlistScreen(uiState, viewModel)
             }
         }
     }
-
-    // BottomSheet untuk Filter
     if (uiState.showFilterSheet) {
         FilterBottomSheet(
             uiState = uiState,
@@ -484,8 +469,6 @@ fun FilterBottomSheet(
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
-
-            // ✅ HANYA CATEGORY FILTER (LANGUAGE DIHAPUS)
             if (uiState.categories.isNotEmpty()) {
                 Text(
                     text = viewModel.getText("category") + ":",
@@ -520,8 +503,6 @@ fun FilterBottomSheet(
                 }
                 Spacer(modifier = Modifier.height(16.dp))
             }
-
-            // Status Filter Saat Ini
             if (uiState.selectedCategory != null) {
                 Divider(
                     modifier = Modifier.padding(vertical = 8.dp)
@@ -568,7 +549,6 @@ fun CharacterListContent(
     viewModel: CharacterViewModel
 ) {
     when {
-        // ========== 1. LOADING ==========
         uiState.isLoading -> {
             Box(
                 modifier = Modifier.fillMaxSize(),
@@ -629,7 +609,6 @@ fun CharacterListContent(
             }
         }
 
-        // ========== 3. ERROR (tapi filter sudah siap) ==========
         uiState.error != null && uiState.isFilterReady -> {
             Card(
                 modifier = Modifier.fillMaxWidth(),
@@ -642,7 +621,7 @@ fun CharacterListContent(
                     modifier = Modifier.padding(16.dp)
                 ) {
                     Text(
-                        text = "❌ ${viewModel.getText("error")}",
+                        text = "${viewModel.getText("error")}",
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onErrorContainer
@@ -667,8 +646,6 @@ fun CharacterListContent(
                 }
             }
         }
-
-        // ========== 4. KARAKTER DITEMUKAN ==========
         uiState.characters.isNotEmpty() -> {
             Column {
                 Text(
@@ -690,21 +667,6 @@ fun CharacterListContent(
                 }
             }
         }
-
-        // ========== 5. KONDISI LAINNYA (fallback) ==========
-        else -> {
-            // ✅ Ini seharusnya tidak terjadi, tapi sebagai fallback
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = viewModel.getText("no_filter"),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-        }
     }
 }
 
@@ -713,17 +675,12 @@ fun WishlistScreen(
     uiState: UiState,
     viewModel: CharacterViewModel
 ) {
-    // ✅ Gunakan allCharacters dari ViewModel (bukan dari uiState)
     val allCharacters by viewModel.allCharacters.collectAsState()
     val favoriteNames by viewModel.favoriteNames.collectAsState()
-
-    // ✅ Filter karakter favorit
     val favoriteCharacters = allCharacters.filter { character ->
         val key = viewModel.getCharacterKey(character.name)
         favoriteNames.contains(key)
     }
-
-    // ✅ Hapus duplikat berdasarkan nama
     val uniqueFavoriteCharacters = favoriteCharacters.distinctBy {
         viewModel.getCharacterKey(it.name)
     }
@@ -801,10 +758,6 @@ fun CharacterCard(
 ) {
     val context = LocalContext.current
     val interactionSource = remember { MutableInteractionSource() }
-
-    // ✅ Gunakan favoriteNames
-    val favoriteNames by viewModel.favoriteNames.collectAsState()
-    val isFavorite = favoriteNames.contains(viewModel.getCharacterKey(character.name))
 
     Card(
         modifier = Modifier
@@ -886,15 +839,6 @@ fun CharacterCard(
                     )
                 }
             }
-
-            // ✅ Ikon panah
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(
-                    imageVector = Icons.Default.ArrowForward,
-                    contentDescription = "View details",
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
         }
     }
 }
@@ -966,7 +910,6 @@ fun CharacterDetailScreen(
                         Column(
                             modifier = Modifier.padding(16.dp)
                         ) {
-                            // Baris nama + ikon love
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -1218,188 +1161,6 @@ fun CharacterDetailScreen(
 }
 
 @Composable
-fun LoginDialog(
-    uiState: UiState,
-    viewModel: CharacterViewModel
-) {
-    var username by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var confirmPassword by remember { mutableStateOf("") }
-    var showPassword by remember { mutableStateOf(false) }
-    var isRegisterMode by remember { mutableStateOf(false) }
-
-    AlertDialog(
-        onDismissRequest = { },
-        title = {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Icon(
-                    imageVector = if (isRegisterMode) Icons.Default.PersonAdd else Icons.Default.Lock,
-                    contentDescription = if (isRegisterMode) "Register" else "Login",
-                    modifier = Modifier.size(48.dp),
-                    tint = MaterialTheme.colorScheme.primary
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = if (isRegisterMode) "Register" else "Login",
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-        },
-        text = {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                // Error message
-                uiState.error?.let {
-                    Card(
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.errorContainer
-                        )
-                    ) {
-                        Text(
-                            text = "❌ ${it}",
-                            modifier = Modifier.padding(12.dp),
-                            color = MaterialTheme.colorScheme.onErrorContainer,
-                            fontSize = 14.sp
-                        )
-                    }
-                }
-
-                // Username Field
-                OutlinedTextField(
-                    value = username,
-                    onValueChange = { username = it },
-                    label = { Text("Username") },
-                    placeholder = { Text("Masukkan username") },
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Default.Person,
-                            contentDescription = "Username"
-                        )
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true,
-                    isError = uiState.error != null
-                )
-
-                // Password Field
-                OutlinedTextField(
-                    value = password,
-                    onValueChange = { password = it },
-                    label = { Text("Password") },
-                    placeholder = { Text("Masukkan password") },
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Default.Lock,
-                            contentDescription = "Password"
-                        )
-                    },
-                    trailingIcon = {
-                        IconButton(
-                            onClick = { showPassword = !showPassword }
-                        ) {
-                            Icon(
-                                imageVector = if (showPassword)
-                                    Icons.Default.Visibility
-                                else
-                                    Icons.Default.VisibilityOff,
-                                contentDescription = if (showPassword) "Hide password" else "Show password"
-                            )
-                        }
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true,
-                    visualTransformation = if (showPassword)
-                        VisualTransformation.None
-                    else
-                        PasswordVisualTransformation(),
-                    isError = uiState.error != null
-                )
-
-                // Confirm Password (hanya saat register)
-                if (isRegisterMode) {
-                    OutlinedTextField(
-                        value = confirmPassword,
-                        onValueChange = { confirmPassword = it },
-                        label = { Text("Konfirmasi Password") },
-                        placeholder = { Text("Konfirmasi password") },
-                        leadingIcon = {
-                            Icon(
-                                imageVector = Icons.Default.Lock,
-                                contentDescription = "Konfirmasi Password"
-                            )
-                        },
-                        modifier = Modifier.fillMaxWidth(),
-                        singleLine = true,
-                        visualTransformation = if (showPassword)
-                            VisualTransformation.None
-                        else
-                            PasswordVisualTransformation(),
-                        isError = uiState.error != null
-                    )
-                }
-
-                // Switch Login/Register
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    TextButton(
-                        onClick = {
-                            isRegisterMode = !isRegisterMode
-                            // Reset error saat switch
-                            if (uiState.error != null) {
-                                viewModel.hideLoginDialog()
-                                viewModel.showLoginDialog()
-                            }
-                        }
-                    ) {
-                        Text(
-                            text = if (isRegisterMode)
-                                "Already have an account? Log in"
-                            else
-                                "Don't have an account? Register",
-                            fontSize = 12.sp
-                        )
-                    }
-                }
-            }
-        },
-        confirmButton = {
-            Button(
-                onClick = {
-                    if (isRegisterMode) {
-                        viewModel.register(username, password, confirmPassword)
-                    } else {
-                        viewModel.login(username, password)
-                    }
-                },
-                modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = if (isRegisterMode)
-                        MaterialTheme.colorScheme.secondary
-                    else
-                        MaterialTheme.colorScheme.primary
-                )
-            ) {
-                Icon(
-                    imageVector = if (isRegisterMode) Icons.Default.PersonAdd else Icons.Default.Login,
-                    contentDescription = if (isRegisterMode) "Register" else "Login"
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(if (isRegisterMode) "Register" else "Login")
-            }
-        },
-        containerColor = MaterialTheme.colorScheme.surface
-    )
-}
-
-@Composable
 fun LoginPage(
     uiState: UiState,
     viewModel: CharacterViewModel
@@ -1429,7 +1190,6 @@ fun LoginPage(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            // ========== LOGO ==========
             Icon(
                 imageVector = if (isRegisterMode) Icons.Default.PersonAdd else Icons.Default.Lock,
                 contentDescription = if (isRegisterMode) "Register" else "Login",
@@ -1439,7 +1199,6 @@ fun LoginPage(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // ========== JUDUL ==========
             Text(
                 text = if (isRegisterMode) viewModel.getText("create_account") else viewModel.getText("welcome"),
                 style = MaterialTheme.typography.headlineLarge,
@@ -1455,7 +1214,6 @@ fun LoginPage(
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // ========== PESAN LOGOUT (Jika baru logout) ==========
             if (uiState.isLogoutSuccess) {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -1486,7 +1244,6 @@ fun LoginPage(
                 Spacer(modifier = Modifier.height(12.dp))
             }
 
-            // ========== PESAN ERROR ==========
             uiState.error?.let { errorKey ->
                 val errorMessage = when (errorKey) {
                     "username_not_found" -> viewModel.getText("username_not_found")
@@ -1527,7 +1284,6 @@ fun LoginPage(
                 Spacer(modifier = Modifier.height(12.dp))
             }
 
-            // ========== USERNAME FIELD ==========
             OutlinedTextField(
                 value = username,
                 onValueChange = { username = it.trim() },
@@ -1553,7 +1309,6 @@ fun LoginPage(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // ========== PASSWORD FIELD ==========
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
@@ -1593,7 +1348,6 @@ fun LoginPage(
                 )
             )
 
-            // ========== CONFIRM PASSWORD (Register) ==========
             if (isRegisterMode) {
                 Spacer(modifier = Modifier.height(12.dp))
                 OutlinedTextField(
@@ -1625,7 +1379,6 @@ fun LoginPage(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // ========== TOMBOL LOGIN/REGISTER ==========
             Button(
                 onClick = {
                     if (isRegisterMode) {
@@ -1659,11 +1412,9 @@ fun LoginPage(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // ========== SWITCH LOGIN/REGISTER ==========
             TextButton(
                 onClick = {
                     isRegisterMode = !isRegisterMode
-                    // Reset error saat switch
                     if (uiState.error != null) {
                         viewModel.hideLoginDialog()
                         viewModel.showLoginDialog()

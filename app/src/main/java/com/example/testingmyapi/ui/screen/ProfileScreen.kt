@@ -47,9 +47,6 @@ fun ProfileScreen(
     val interactionSource = remember { MutableInteractionSource() }
     var showImagePickerDialog by remember { mutableStateOf(false) }
 
-    // ✅ Ambil teks berdasarkan bahasa
-    val language = uiState.appLanguage
-
     val availableLanguages = listOf(
         "en" to viewModel.getText("english"),
         "id" to viewModel.getText("indonesian")
@@ -71,9 +68,6 @@ fun ProfileScreen(
         }
     }
 
-    // ============================================================
-    // CROP LAUNCHER
-    // ============================================================
     val cropLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -99,9 +93,6 @@ fun ProfileScreen(
         }
     }
 
-    // ============================================================
-    // GALLERY LAUNCHER
-    // ============================================================
     val galleryLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri ->
@@ -129,9 +120,6 @@ fun ProfileScreen(
         }
     }
 
-    // ============================================================
-    // CAMERA LAUNCHER
-    // ============================================================
     val cameraLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.TakePicturePreview()
     ) { bitmap ->
@@ -142,9 +130,6 @@ fun ProfileScreen(
         }
     }
 
-    // ============================================================
-    // LAYOUT UTAMA
-    // ============================================================
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -314,27 +299,6 @@ fun ProfileScreen(
                             )
                             Text(
                                 text = viewModel.getText("favorites"),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        }
-
-                        Box(
-                            modifier = Modifier
-                                .width(1.dp)
-                                .fillMaxHeight(0.6f)
-                                .background(MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.2f))
-                        )
-
-                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Text(
-                                text = uiState.characters.size.toString(),
-                                style = MaterialTheme.typography.headlineLarge,
-                                fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.primary
-                            )
-                            Text(
-                                text = viewModel.getText("characters_count"),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )

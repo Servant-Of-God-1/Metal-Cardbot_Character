@@ -2,9 +2,7 @@ package com.example.testingmyapi.utils
 
 object LanguageManager {
 
-    // ============ BAHASA INDONESIA ============
     private val id = mapOf(
-        // ===== LOGIN =====
         "login_title" to "Masuk",
         "register_title" to "Daftar",
         "username" to "Nama Pengguna",
@@ -31,10 +29,8 @@ object LanguageManager {
         "offline" to "Offline",
         "guest" to "Tamu",
 
-        // ===== MAIN / HEADER =====
         "characters" to "Karakter",
         "wishlist" to "Favorit",
-        "found_characters" to "Ditemukan %d karakter",
         "filter" to "Filter",
         "logout" to "Keluar",
         "login" to "Masuk",
@@ -81,7 +77,6 @@ object LanguageManager {
         "add_to_wishlist" to "Tambahkan ke wishlist",
         "remove_from_wishlist" to "Hapus dari wishlist",
 
-        // ===== CHARACTER DETAIL =====
         "no_images" to "Tidak ada gambar",
         "overview" to "Ringkasan",
         "abilities_powers" to "Kemampuan & Kekuatan",
@@ -91,20 +86,17 @@ object LanguageManager {
         "category_label" to "Kategori",
         "video" to "Video",
 
-        // ===== GENERAL =====
         "error" to "Error",
         "unknown_error" to "Error tidak diketahui",
         "wifi_not_connected" to "Tidak ada koneksi internet! Aplikasi akan ditutup.",
         "press_again_to_exit" to "Tekan sekali lagi untuk keluar",
 
-        // ===== LOGIN & LOGOUT =====
         "login_success" to "Login berhasil! Selamat datang, %s",
         "logout_success" to "Anda telah berhasil logout. Sampai jumpa!",
         "login_error_username" to "Username '%s' tidak ditemukan!",
         "login_error_password" to "Password salah! Silakan coba lagi.",
         "register_success" to "Pendaftaran berhasil! Selamat datang, %s",
 
-        // ===== CROP / PROFILE PHOTO =====
         "change_profile_photo" to "Ubah Foto Profil",
         "choose_photo_source" to "Pilih sumber foto untuk profil Anda",
         "choose_from_gallery" to "Pilih dari Galeri",
@@ -121,9 +113,7 @@ object LanguageManager {
         "photo_updated_success" to "Foto profil berhasil diperbarui!",
     )
 
-    // ============ BAHASA INGGRIS ============
     private val en = mapOf(
-        // ===== LOGIN =====
         "login_title" to "Login",
         "register_title" to "Register",
         "username" to "Username",
@@ -150,10 +140,8 @@ object LanguageManager {
         "offline" to "Offline",
         "guest" to "Guest",
 
-        // ===== MAIN / HEADER =====
         "characters" to "Characters",
         "wishlist" to "Wishlist",
-        "found_characters" to "Found %d characters",
         "filter" to "Filter",
         "logout" to "Logout",
         "login" to "Login",
@@ -165,7 +153,6 @@ object LanguageManager {
         "category" to "Category",
         "back_to_list" to "Back to list",
 
-        // ===== FILTER =====
         "filter_title" to "Filter",
         "active_filters" to "Active Filters",
         "clear" to "Clear",
@@ -173,7 +160,6 @@ object LanguageManager {
         "retry" to "Retry",
         "error_occurred" to "An error occurred",
 
-        // ===== PROFILE =====
         "profile_title" to "Profile",
         "statistics" to "Statistics",
         "favorites" to "Favorites",
@@ -192,7 +178,6 @@ object LanguageManager {
         "cancel" to "Cancel",
         "delete_photo_confirm" to "Delete Profile Photo",
 
-        // ===== WISHLIST =====
         "no_favorites" to "No favorite characters yet",
         "no_favorites_hint" to "Tap the love icon on a character to add it",
         "loading_data" to "Loading data...",
@@ -200,7 +185,6 @@ object LanguageManager {
         "add_to_wishlist" to "Add to wishlist",
         "remove_from_wishlist" to "Remove from wishlist",
 
-        // ===== CHARACTER DETAIL =====
         "no_images" to "No images available",
         "overview" to "Overview",
         "abilities_powers" to "Abilities & Powers",
@@ -210,13 +194,11 @@ object LanguageManager {
         "category_label" to "Category",
         "video" to "Video",
 
-        // ===== GENERAL =====
         "error" to "Error",
         "unknown_error" to "Unknown error",
         "wifi_not_connected" to "No internet connection! App will close.",
         "press_again_to_exit" to "Press again to exit",
 
-        // ===== LOGIN & LOGOUT =====
         "login_success" to "Login successful! Welcome, %s",
         "logout_success" to "You have successfully logged out. See you!",
         "login_error_username" to "Username '%s' not found!",
@@ -238,8 +220,6 @@ object LanguageManager {
         "crop_success" to "Image cropped successfully!",
         "photo_updated_success" to "Profile photo updated successfully!",
     )
-
-    // ============ FUNGSI GET TEXT ============
     fun getText(key: String, language: String = "en", vararg args: Any): String {
         val texts = if (language == "id") id else en
         val text = texts[key] ?: key
