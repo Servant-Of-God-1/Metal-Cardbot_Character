@@ -5,6 +5,7 @@
   <br>
   <b>Metal Cardbot Character Logo Apps</b>
 </p>
+
 ***The minimum Android system required to run this application is Android 7 (Nougat). Android 11 is ideal (as I tested it on a phone running Android 11).***
 
 ***I am using the API from***
